@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>FutureMe AI</title>
+  <style>
+    body { 
+      font-family: Arial, sans-serif; 
+      background: linear-gradient(to right, #0f172a, #1e293b); 
+      color: white; 
+      text-align: center; 
+      padding: 50px;
+    }
+    .card {
+      background: #2c3e50;
+      padding: 20px;
+      border-radius: 15px;
+      width: 400px;
+      margin: auto;
+    }
+    input, textarea, button {
+      width: 90%;
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 8px;
+      border: none;
+    }
+    button {
+      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      color: #0f172a;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    #output { margin-top: 15px; white-space: pre-line; }
+  </style>
+</head>
+<body>
+
+<h1>FutureMe AI ✨</h1>
+<p>Write a letter to your future self</p>
+
+<div class="card">
+  <input type="email" id="email" placeholder="Your email" required>
+  <textarea id="letter" placeholder="Write your letter..." rows="5" required></textarea>
+<input type="datetime-local" id="date" required>
+  <button id="sendBtn">Send to Future Me</button>
+  <p id="output"></p>
+</div>
+
+<script>
+  const sendBtn = document.getElementById("sendBtn");
+  const output = document.getElementById("output");
+
+  sendBtn.addEventListener("click", async () => {
+    const email = document.getElementById("email").value;
+    const letter = document.getElementById("letter").value;
+    const deliveryDate = document.getElementById("date").value;
+
+    if(!email || !letter || !deliveryDate) return alert("All fields are required!");
+
+    sendBtn.disabled = true;
+    sendBtn.innerText = "Saving...";
+
+    try {
+      const res = await fetch("/api/generate", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ email, letter })
+});
+
+      const data = await res.json();
+      output.innerText = data.result;
+    } catch (err) {
+      output.innerText = "Error: Could not reach server.";
+    }
+
+    sendBtn.disabled = false;
+    sendBtn.innerText = "Send to Future Me";
+  });
+</script>
+
+</body>
+</html>
