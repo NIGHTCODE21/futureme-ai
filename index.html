@@ -47,6 +47,7 @@
 </div>
 
 <script>
+<<<<<<< HEAD
   const sendBtn = document.getElementById("sendBtn");
   const output = document.getElementById("output");
 
@@ -76,7 +77,40 @@
     sendBtn.disabled = false;
     sendBtn.innerText = "Send to Future Me";
   });
+=======
+const sendBtn = document.getElementById("sendBtn");
+const output = document.getElementById("output");
+
+sendBtn.addEventListener("click", async () => {
+  const email = document.getElementById("email").value;
+  const letter = document.getElementById("letter").value;
+  const deliveryDate = document.getElementById("date").value;
+
+  if (!email || !letter || !deliveryDate)
+    return alert("All fields are required!");
+
+  sendBtn.disabled = true;
+  sendBtn.innerText = "Scheduling...";
+
+  try {
+    const res = await fetch("/api/send", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, letter, deliveryDate })
+    });
+
+    const data = await res.json();
+    output.innerText = data.success || data.error;
+  } catch (err) {
+    output.innerText = "Error: Could not reach server.";
+  }
+
+  sendBtn.disabled = false;
+  sendBtn.innerText = "Send to Future Me";
+});
+>>>>>>> 2c430993086b94741af6b9880e2663336918c60e
 </script>
+
 
 </body>
 </html>
