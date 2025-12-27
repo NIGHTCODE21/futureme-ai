@@ -47,7 +47,7 @@
 </div>
 
 <script>
-<<<<<<< HEAD
+
   const sendBtn = document.getElementById("sendBtn");
   const output = document.getElementById("output");
 
@@ -62,11 +62,12 @@
     sendBtn.innerText = "Saving...";
 
     try {
-      const res = await fetch("/api/generate", {
+      const res = await fetch("https://YOUR-RENDER-URL.onrender.com/send", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({ email, letter })
 });
+
 
       const data = await res.json();
       output.innerText = data.result;
@@ -77,9 +78,9 @@
     sendBtn.disabled = false;
     sendBtn.innerText = "Send to Future Me";
   });
-=======
-const sendBtn = document.getElementById("sendBtn");
-const output = document.getElementById("output");
+
+sendBtn = document.getElementById("sendBtn");
+output = document.getElementById("output");
 
 sendBtn.addEventListener("click", async () => {
   const email = document.getElementById("email").value;
@@ -108,7 +109,7 @@ sendBtn.addEventListener("click", async () => {
   sendBtn.disabled = false;
   sendBtn.innerText = "Send to Future Me";
 });
->>>>>>> 2c430993086b94741af6b9880e2663336918c60e
+
 </script>
 
 
